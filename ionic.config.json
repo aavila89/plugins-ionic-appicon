@@ -1,0 +1,7 @@
+{
+  "name": "ionic_iconchange_cap",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
