@@ -8,11 +8,11 @@ import {
   IonPage,
   IonRefresher,
   IonRefresherContent,
+  IonText,
   IonTitle,
   IonToolbar,
   useIonViewWillEnter
 } from '@ionic/react';
-import './Home.css';
 
 const Home: React.FC = () => {
 
@@ -30,25 +30,15 @@ const Home: React.FC = () => {
   };
 
   return (
-    <IonPage id="home-page">
+    <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Inbox</IonTitle>
+        <IonToolbar color="primary">
+          <IonTitle className="ion-no-padding ion-text-center">
+            <IonText>@capacitor-community/app-icon</IonText>
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonRefresher slot="fixed" onIonRefresh={refresh}>
-          <IonRefresherContent></IonRefresherContent>
-        </IonRefresher>
-
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">
-              Inbox
-            </IonTitle>
-          </IonToolbar>
-        </IonHeader>
-
+      <IonContent fullscreen className="ion-padding">
         <IonList>
           {messages.map(m => <MessageListItem key={m.id} message={m} />)}
         </IonList>

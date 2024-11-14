@@ -1,30 +1,45 @@
 import {
+  IonAvatar,
   IonItem,
   IonLabel,
-  IonNote
+  useIonToast,
   } from '@ionic/react';
 import { Message } from '../data/messages';
 import './MessageListItem.css';
+import { AppIcon } from '@capacitor-community/app-icon';
 
 interface MessageListItemProps {
   message: Message;
 }
 
 const MessageListItem: React.FC<MessageListItemProps> = ({ message }) => {
+  const [present] = useIonToast();
+  
+  const changeIcon = async (iconName: string) => {
+    if (iconName === "AppIcon") {
+      await AppIcon.reset({suppressNotification: true});
+    } else {
+      await AppIcon.change({name: iconName, suppressNotification: true});
+    }
+
+    present({
+      message: 'Icon changed!',
+      duration: 1500,
+      position: "bottom",
+      color: "light"
+    });
+
+  };
+
   return (
-    <IonItem id="message-list-item" routerLink={`/message/${message.id}`} detail={false}>
-      <div slot="start" className="dot dot-unread"></div>
+    <IonItem id="message-list-item" detail={false} button onClick={() => changeIcon(message.iconName)}>
       <IonLabel className="ion-text-wrap">
         <h2>
-          {message.fromName}
-          <span className="date">
-            <IonNote>{message.date}</IonNote>
-          </span>
+        <IonAvatar style={{ marginRight: 15 }}>
+         <img src={message.source}/>
+        </IonAvatar>
+          {message.iconName}
         </h2>
-        <h3>{message.subject}</h3>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-        </p>
       </IonLabel>
     </IonItem>
   );
